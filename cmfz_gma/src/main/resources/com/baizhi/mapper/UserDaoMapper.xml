@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao">
+    <select id="selectAll" resultType="User">
+        select user_id id,phone,password,dharmaName,province,city,gender,personal_sign personalSign,profile,status,
+        regist_time registTime from c_user
+        limit #{begin} , #{rows}
+    </select>
+    <select id="selectRecords" resultType="Integer">
+        select count(*) from c_user
+    </select>
+    <update id="updateImgPath">
+        update c_user set profile = #{profile} where user_id = #{id}
+    </update>
+    <update id="update">
+        update c_user set status=#{status} where user_id=#{id}
+    </update>
+    <select id="selectByeasyPoi" resultType="User">
+        select user_id id,phone,password,dharmaName,province,city,gender,personal_sign personalSign,profile,status,
+        regist_time registTime from c_user
+    </select>
+    <insert id="insert" parameterType="User">
+        insert into c_user values (#{id},#{phone},#{password},null,#{dharmaName},#{province},#{city},#{gender},#{personalSign},#{profile},#{status},#{registTime})
+    </insert>
+    <select id="login" resultType="User">
+        select user_id id,phone,password,dharmaName,province,city,gender,personal_sign personalSign,profile,status,
+        regist_time registTime from c_user where phone=#{phone} and password=#{password}
+    </select>
+    <select id="selectByPhone" resultType="User">
+        select user_id id,phone,password,dharmaName,province,city,gender,personal_sign personalSign,profile,status,
+        regist_time registTime from c_user where phone=#{phone}
+    </select>
+    <insert id="insertUser" parameterType="User">
+        insert into c_user values (#{id},#{phone},#{password},null,#{dharmaName},#{province},#{city},#{gender},#{personalSign},#{profile},#{status},#{registTime})
+    </insert>
+    <select id="selectById" resultType="User">
+        select phone from c_user
+        where phone=#{phone}
+    </select>
+    <select id="countRegistUserByMonth" resultType="map">
+        select DATE_FORMAT(regist_time,'%Y年%m月') month,count(user_id) count from c_user group by month;
+    </select>
+    <select id="userDistributionByGender" resultType="map">
+        select count(user_id) value,province name from c_user where gender=#{gender}
+        group by province
+    </select>
+    <select id="userDistributionMaxCount" resultType="int">
+        select max(value) from (select count(user_id) value,province name from c_user
+        group by province) t
+    </select>
+</mapper>

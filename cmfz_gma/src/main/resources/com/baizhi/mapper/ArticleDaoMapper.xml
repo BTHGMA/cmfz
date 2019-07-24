@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "../mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDao">
+    <select id="selectAll" resultType="Article">
+        select article_id id,guru_id guruId,title,content,publish_time publishTime from c_article
+        limit #{begin} , #{rows}
+    </select>
+    <select id="selectRecords" resultType="Integer">
+        select count(*) from c_article
+    </select>
+    <insert id="insert" parameterType="Article">
+        insert into c_article values(#{id},#{guruId},#{title},#{content},#{publishTime})
+    </insert>
+    <delete id="delete">
+        delete from c_article where article_id = #{id}
+    </delete>
+    <select id="selectByContent" resultType="Article">
+        select content from c_article where article_id = #{id}
+    </select>
+</mapper>
