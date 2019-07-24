@@ -48,4 +48,9 @@
         select max(value) from (select count(user_id) value,province name from c_user
         group by province) t
     </select>
+    <select id="selectByAll" resultType="User">
+        select user_id id,phone,password,dharmaName,province,city,gender,personal_sign personalSign,profile,status,
+        regist_time registTime from c_user
+
+    </select>
 </mapper>

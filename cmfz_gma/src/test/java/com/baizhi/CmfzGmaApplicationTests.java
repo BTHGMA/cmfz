@@ -2,8 +2,10 @@ package com.baizhi;
 
 import com.baizhi.entity.Admin;
 import com.baizhi.entity.Carousel;
+import com.baizhi.entity.User;
 import com.baizhi.service.AdminService;
 import com.baizhi.service.CarouselService;
+import com.baizhi.service.UserService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -21,6 +23,8 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CmfzGmaApplicationTests {
+    @Autowired
+    UserService userService;
     @Test
     public void test1() throws Exception {
         Workbook workbook = new HSSFWorkbook();
@@ -45,5 +49,11 @@ public class CmfzGmaApplicationTests {
         workbook.close();
     }
 
-
+    @Test
+    public void test2(){
+        List<User> users = userService.queryByall();
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
 }

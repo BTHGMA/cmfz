@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.annotation.AopAnnotation;
 import com.baizhi.dao.UserDao;
 import com.baizhi.entity.Album;
 import com.baizhi.entity.User;
@@ -125,6 +126,14 @@ public class UserServiceImpl implements UserService {
         map.put("women", women);
         map.put("maxCount", maxCount);
         return map;
+    }
+
+    @Override
+    @AopAnnotation
+    public List<User> queryByall() {
+        List<User> users = userDao.selectByAll();
+        return users;
+
     }
 
 

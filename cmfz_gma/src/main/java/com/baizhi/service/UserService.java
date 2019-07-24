@@ -19,5 +19,6 @@ public interface UserService {
     Map<String,List<String>> countRegist();
 
     Map<String, Object> userDistribution();
+    List<User> queryByall();
 
 }

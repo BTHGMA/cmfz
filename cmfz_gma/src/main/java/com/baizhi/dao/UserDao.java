@@ -18,4 +18,5 @@ public interface UserDao extends BaseDao {
     List<Map<String, Object>> countRegistUserByMonth();
     List<Map<String, Object>> userDistributionByGender(String gender);
     Integer userDistributionMaxCount();
+    List<User> selectByAll();
 }
