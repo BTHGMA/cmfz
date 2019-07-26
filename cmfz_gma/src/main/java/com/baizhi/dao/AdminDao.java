@@ -7,4 +7,5 @@ import java.util.List;
 public interface AdminDao {
     List<Admin> selectall();
     Admin login(String username);
+
 }

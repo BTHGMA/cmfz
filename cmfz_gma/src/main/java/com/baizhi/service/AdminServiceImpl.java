@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.annotation.AopAnnotation;
 import com.baizhi.dao.AdminDao;
 
 import com.baizhi.entity.Admin;
@@ -21,6 +22,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
+    @AopAnnotation
     public Map<String, Object> login(Admin admin) {
         Map<String , Object> map = new HashMap<>();
         Admin login = adminDao.login(admin.getUsername());
