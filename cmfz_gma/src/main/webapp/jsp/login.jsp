@@ -14,8 +14,8 @@
     <script src="../jqgrid/js/i18n/grid.locale-cn.js"></script>
     <script src="../jqgrid/extend/js/trirand/jquery.jqGrid.min.js"></script>
     <script src="../boot/js/ajaxfileupload.js"></script>
-    <title>持明法洲后台管理系统</title>
-    <script>
+    <title>持明法洲登录页面</title>
+    <%--<script>
         function formSubmit(){
             $.ajax({
                 url:"${pageContext.request.contextPath}/admin/login",
@@ -31,10 +31,10 @@
                 }
             })
         }
-    </script>
+    </script>--%>
 </head>
 <body>
-<form id="loginForm" action="javascript:void(0)">
+<form id="loginForm" action="${pageContext.request.contextPath}/admin/login" method="post">
     <div class="form-group">
         <label for="exampleInputUsername">Email address</label>
         <input type="text" name="username" class="form-control" id="exampleInputUsername">
@@ -43,8 +43,8 @@
         <label for="exampleInputPassword1">Password</label>
         <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
     </div>
-    <button class="btn btn-default" onclick="formSubmit()" >Submit</button>
-    <span id="message" style="color:#ff1315"></span>
+    <input type="submit" value="登录"/>
+    <%--<span id="message" style="color:red"></span>--%>
 </form>
 </body>
 </html>

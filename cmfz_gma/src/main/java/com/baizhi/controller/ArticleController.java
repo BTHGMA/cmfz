@@ -18,7 +18,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("article")
-public class ArticleComtroller {
+public class ArticleController {
     @Autowired
     private ArticleService articleService;
     @RequestMapping("queryAll")

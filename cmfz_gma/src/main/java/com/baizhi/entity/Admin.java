@@ -12,9 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin implements Serializable {
-    private String admin_id;
+    private String id;
     private String username;
     private String password;
+    private String salt;
     private List<Role> roles;
 
 }

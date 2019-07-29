@@ -1,6 +1,5 @@
 package com.baizhi.service;
 
-import com.baizhi.entity.Album;
 import com.baizhi.entity.Article;
 
 import java.util.List;
@@ -11,5 +10,9 @@ public interface ArticleService {
     String addArticle(Article article);
     void removeArticle(Article article);
     List <Article> queryByContent(Article article);
+    String addOneArticle(Article article);
+    Iterable<Article> queryAll();
+    List<Article> queryAllByPage(Integer page,Integer size);
+    List<Article> queryByKeywordAndPage(String name , Integer page , Integer size);
 }
 

@@ -20,14 +20,29 @@ import java.util.List;
 public class myRealm extends AuthorizingRealm {
 
     @Override
+    //认证
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        System.out.println("进行认证");
+        AdminDao adminDao = (AdminDao) SpringContextUtil.getBean(AdminDao.class);
+        String username = (String) authenticationToken.getPrincipal();
+        Admin admin = adminDao.selectAdminByUsername(username);
+        if (admin == null){
+            return null;
+        }else{
+            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, admin.getPassword(), ByteSource.Util.bytes(admin.getSalt()),this.getName());
+            return simpleAuthenticationInfo;
+        }
+    }
+
+    @Override
     //授权
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        System.out.println("进行授权----------------------------");
+        System.out.println("进行授权=====================");
         String username = (String) principalCollection.getPrimaryPrincipal();
         AdminDao adminDao = (AdminDao) SpringContextUtil.getBean(AdminDao.class);
-        Admin login = adminDao.login(username);
+        Admin admin = adminDao.selectAdmin(username);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        List<Role> roles = login.getRoles();
+        List<Role> roles = admin.getRoles();
         for (Role role : roles) {
             simpleAuthorizationInfo.addRole(role.getRoleName());
             List<Authority> authorities = role.getAuthorities();
@@ -37,21 +52,5 @@ public class myRealm extends AuthorizingRealm {
         }
 
         return simpleAuthorizationInfo;
-    }
-
-    @Override
-    //认证
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("进行认证");
-        AdminDao adminDao = (AdminDao) SpringContextUtil.getBean(AdminDao.class);
-        String username = (String) authenticationToken.getPrincipal();
-        Admin login = adminDao.login(username);
-        if(login==null){
-            return null;
-        }else{
-            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username,login.getPassword(),this.getName());
-            return simpleAuthenticationInfo;
-        }
-
     }
 }

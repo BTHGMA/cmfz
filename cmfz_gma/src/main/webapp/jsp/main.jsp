@@ -1,4 +1,5 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; UTF-8" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!doctype html>
 
 <html lang="en">
@@ -40,8 +41,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">欢迎:${sessionScope.admin.username} <span class="glyphicon glyphicon-user"></span></a></li>
-                <li class="dropdown"><a href="">退出登录</a></li>
+                <li><a href="#">欢迎:<font color="red"><shiro:principal></shiro:principal></font> <span class="glyphicon glyphicon-user"></span></a></li>
+                <li class="dropdown"><a href="${pageContext.request.contextPath}/admin/logout">退出登录</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -51,6 +52,7 @@
     <div class="col-sm-2">
         <div class="row">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <shiro:hasPermission name="carousel:add">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
@@ -62,12 +64,14 @@
                     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
-                                <li role="presentation"><a href="javascript:$('#center').load('carousel.jsp')">轮播图管理</a></li>
+                                <li role="presentation"><a href="javascript:$('#center').load('${pageContext.request.contextPath}/jsp/carousel.jsp')">轮播图管理</a></li>
 
                             </ul>
                         </div>
                     </div>
                 </div>
+                </shiro:hasPermission>
+                <shiro:hasRole name="vip">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingTwo">
                         <h4 class="panel-title">
@@ -79,7 +83,7 @@
                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
-                            <li role="presentation"><a href="javascript:$('#center').load('album.jsp')">专辑和章节管理</a></li>
+                            <li role="presentation"><a href="javascript:$('#center').load('${pageContext.request.contextPath}/jsp/album.jsp')">专辑和章节管理</a></li>
                             </ul>
                         </div>
                     </div>
@@ -94,11 +98,13 @@
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                         <ul class="nav nav-pills nav-stacked">
-                            <li role="presentation"><a href="javascript:$('#center').load('article.jsp')">文章管理</a></li>
-                            <li role="presentation"><a href="javascript:$('#center').load('guru.jsp')">上师管理</a></li>
+                            <li role="presentation"><a href="javascript:$('#center').load('${pageContext.request.contextPath}/jsp/article.jsp')">文章管理</a></li>
+                            <li role="presentation"><a href="javascript:$('#center').load('${pageContext.request.contextPath}/jsp/guru.jsp')">上师管理</a></li>
                         </ul>
                     </div>
                 </div>
+                </shiro:hasRole>
+                <shiro:hasRole name="admin">
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingFour">
                         <h4 class="panel-title">
@@ -109,12 +115,13 @@
                     </div>
                     <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseFour">
                         <ul class="nav nav-pills nav-stacked">
-                            <li role="presentation"><a href="javascript:$('#center').load('user.jsp')">用户管理</a></li>
-                            <li role="presentation"><a href="javascript:$('#center').load('echarts.jsp')">每月注册用户</a></li>
-                            <li role="presentation"><a href="javascript:$('#center').load('map.jsp')">全国用户分布图</a></li>
+                            <li role="presentation"><a href="javascript:$('#center').load('${pageContext.request.contextPath}/jsp/user.jsp')">用户管理</a></li>
+                            <li role="presentation"><a href="javascript:$('#center').load('${pageContext.request.contextPath}/jsp/echarts.jsp')">每月注册用户</a></li>
+                            <li role="presentation"><a href="javascript:$('#center').load('${pageContext.request.contextPath}/jsp/map.jsp')">全国用户分布图</a></li>
                         </ul>
                     </div>
                 </div>
+                </shiro:hasRole>
             </div>
         </div>
     </div>

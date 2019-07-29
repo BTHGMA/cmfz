@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("album")
-public class AlbumComtroller {
+public class AlbumController {
     @Autowired
     private AlbumService albumService;
     @RequestMapping("queryAll")

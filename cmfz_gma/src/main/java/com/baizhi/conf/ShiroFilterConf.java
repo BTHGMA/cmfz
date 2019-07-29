@@ -1,6 +1,8 @@
 package com.baizhi.conf;
 
+
 import com.baizhi.util.myRealm;
+
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -12,43 +14,44 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class ShiroFilterConf {
     @Bean
-    public ShiroFilterFactoryBean getshirofilterfactoryBean(SecurityManager securityManager){
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        HashMap<String, String>map = new HashMap<>();
+        Map<String,String> map = new HashMap<>();
         map.put("/**","authc");
         map.put("/admin/login","anon");
         map.put("/jsp/main.jsp","anon");
-        shiroFilterFactoryBean .setFilterChainDefinitionMap(map);
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         shiroFilterFactoryBean.setLoginUrl("/jsp/login.jsp");
         return shiroFilterFactoryBean;
     }
     @Bean
-    public  SecurityManager getsecurityManager(myRealm myRealm, CacheManager cacheManager){
+    public SecurityManager getSecurityManager(myRealm myRealm, CacheManager cacheManager){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(myRealm);
         defaultWebSecurityManager.setCacheManager(cacheManager);
         return defaultWebSecurityManager;
     }
     @Bean
-    public myRealm getmyRealm(CredentialsMatcher credentialsMatcher){
+    public myRealm getMyRealm(CredentialsMatcher credentialsMatcher){
         myRealm myRealm = new myRealm();
         myRealm.setCredentialsMatcher(credentialsMatcher);
         return myRealm;
     }
     @Bean
-    public CredentialsMatcher credentialsMatcher(){
+    public CredentialsMatcher getCredentialsMatcher(){
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName("MD5");
         hashedCredentialsMatcher.setHashIterations(1024);
         return hashedCredentialsMatcher;
     }
     @Bean
-    public CacheManager cacheManager(){
-        return  new EhCacheManager();
+    public CacheManager getCacheManager(){
+        return new EhCacheManager();
     }
 }
