@@ -22,10 +22,14 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
     @RequestMapping("queryAll")
-    public Map<String , Object> queryAll(Integer page , Integer rows){
-        Map<String, Object> stringObjectMap = articleService.queryAll(page,rows);
+    public Map<String , Object> queryAll(Integer page, Integer rows){
+        Map<String, Object> stringObjectMap = articleService.queryAll(page-1, rows);
         return stringObjectMap;
     }
+//    public  List<Article> queryAllByPage(Integer page,Integer size){
+//        List<Article> articles = articleService.queryAllByPage(page, size);
+//        return articles;
+//    }
     @RequestMapping("edit")
     public String edit(String oper , String[] id, Article article) {
         if ("edit".equals(oper)) {
@@ -103,6 +107,11 @@ public class ArticleController {
     @RequestMapping("querybycontent")
     public List<Article> queryByContent(Article article){
         List<Article> articles = articleService.queryByContent(article);
+        return articles;
+    }
+    @RequestMapping("queryByKeywordAndPage")
+    public List<Article> queryByKeywordAndPage(String name, Integer page, Integer size){
+        List<Article> articles = articleService.queryByKeywordAndPage(name, 1, 3);
         return articles;
     }
 }

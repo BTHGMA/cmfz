@@ -8,7 +8,7 @@ public interface CustomizedRepository {
     //实现分页的方法
     List<Article> findByPageable(int page, int size);
     //term查询高亮
-    List<Article> findByNameAndHighlightAndPageable(String name, int page, int size);
+    List<Article> findByNameAndHighlightAndPageable(String name, int page, int rows);
     //term查询高亮总数
     //Integer findByNameAndHighlightAndPageableRecords(String name);
 }

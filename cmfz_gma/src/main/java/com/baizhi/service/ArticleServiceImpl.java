@@ -26,22 +26,24 @@ public class ArticleServiceImpl implements ArticleService {
     CustomizedRepository customizedRepository;
     @Autowired
     ArticleReposiroty articleReposiroty;
-    @Override
+   @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public Map<String, Object> queryAll(Integer page, Integer rows) {
         Map<String , Object> map = new HashMap<>();
-        Integer records = articleDao.selectRecords();
-        Integer total = records%rows == 0 ?records/rows : records/rows+1;
-        Integer begin = (page-1)*rows;
-        List<Album> carousels = articleDao.selectAll(begin, rows);
+//        Integer records = articleDao.selectRecords();
+//        Integer total = records%rows == 0 ?records/rows : records/rows+1;
+//        Integer begin = (page-1)*rows;
+        //List<Album> carousels = articleDao.selectAll(begin, rows);
+        System.out.println(customizedRepository);
+       List<Article> byPageable = customizedRepository.findByPageable(page, rows);
         //当前页
         map.put("page",page);
         //总记录数
-        map.put("records",records);
-        //总页数
-        map.put("total",total);
+//        map.put("records",records);
+//        //总页数
+//        map.put("total",total);
         //查询出的集合
-        map.put("rows",carousels);
+        map.put("rows",byPageable);
         return map;
     }
 
@@ -50,13 +52,13 @@ public class ArticleServiceImpl implements ArticleService {
         System.out.println(article);
         String s = UUID.randomUUID().toString();
         article.setId(s);
-        articleDao.insert(article);
+        articleReposiroty.save(article);
         return s;
     }
 
     @Override
     public void removeArticle(Article article) {
-        articleDao.delete(article);
+        articleReposiroty.delete(article);
     }
 
     @Override
@@ -81,8 +83,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> queryAllByPage(Integer page, Integer size) {
-        List<Article> articles = customizedRepository.findByPageable(page - 1, size);
-        return articles;
+        List<Article> byPageable = customizedRepository.findByPageable(page, size);
+
+
+        return byPageable;
     }
 
     @Override

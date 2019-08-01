@@ -43,7 +43,7 @@ public class CustomizedRepositoryImpl implements CustomizedRepository {
     }
 
     @Override
-    public List<Article> findByNameAndHighlightAndPageable(String name, int page, int size) {
+    public List<Article> findByNameAndHighlightAndPageable(String name, int page, int rows) {
         HighlightBuilder.Field nameField = new HighlightBuilder
                 .Field("*")
                 .preTags("<span style='color:red'>")
@@ -52,7 +52,7 @@ public class CustomizedRepositoryImpl implements CustomizedRepository {
         NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder()
 
                 .withQuery(QueryBuilders.multiMatchQuery(name,"title","content"))
-                .withPageable(PageRequest.of(page,size))
+                .withPageable(PageRequest.of(page,rows))
                 .withHighlightFields(nameField)
                 .build();
 
@@ -71,7 +71,6 @@ public class CustomizedRepositoryImpl implements CustomizedRepository {
                     article.setContent(sourceAsMap.get("content").toString());
                     article.setTitle(sourceAsMap.get("title").toString());
                     String publishTime = sourceAsMap.get("publishTime").toString();
-                    System.out.println(publishTime);
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     try {
                         Date parse = simpleDateFormat.parse(publishTime);
@@ -125,7 +124,6 @@ public class CustomizedRepositoryImpl implements CustomizedRepository {
 //                    article.setContent(sourceAsMap.get("content").toString());
 //                    article.setTitle(sourceAsMap.get("title").toString());
 //                    String publishTime = sourceAsMap.get("publishTime").toString();
-//                    System.out.println(publishTime);
 //                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //                    try {
 //                        Date parse = simpleDateFormat.parse(publishTime);

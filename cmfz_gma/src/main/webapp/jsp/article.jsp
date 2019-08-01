@@ -29,11 +29,7 @@
                     {name:"id"},
                     {name:"guruId",editable:true},
                     {name:"title",editable:true},
-                    {name:"content",formatter:function(cellvalue, options, rowObject){
-                return "<button onclick=\"queryByContent('"+rowObject.id+"')\" type=\"button\" class=\"btn btn-primary\" data-toggle=\"button\" aria-pressed=\"false\" autocomplete=\"off\">\n" +
-                    "预览" +
-                    " </button>"
-            }},
+                    {name:"content",editable:true},
                     {name:"publishTime",edittype:"date",editable:true}],
                 pager:"carouselPager",
                 rowNum:3,
@@ -100,22 +96,20 @@
             })
 
         }
-        function queryByContent(id) {
-            $('#myModal1').modal({
-                backdrop:true,
-                keyboard:true,
-            })
-            $.ajax({
-                url:"${pageContext.request.contextPath}/article/querybycontent?id=" + id,
-                type:"post",
-                datatype:"json",
-                data:$("#articleForm1").serialize(),
-               // data:{"id":response.responseText},
-                success:function(obj){
-                    $("#modalContent").html(obj[0].content)
+        function queryByKeywordAndPage() {
+            var name=$("#name").val()
+            <%--$.ajax({--%>
+                <%--url:"${pageContext.request.contextPath}/article/queryByKeywordAndPage?name="+name,--%>
+                <%--type:"post",--%>
+                <%--datatype:"json",--%>
+                <%--//data:$("#name").serialize(),--%>
+                <%--//data:{"id":response.responseText},--%>
+                <%--success:function(){--%>
+                    <%--$("#carouselTable").trigger("reloadGrid");--%>
 
-                }
-            })
+                <%--}--%>
+            <%--})--%>
+            $("#carouselTable").jqGrid('setGridParam', {url: "${pageContext.request.contextPath}/article/queryByKeywordAndPage?name="+name,page:1}).trigger('reloadGrid');
 
         }
     </script>
@@ -123,6 +117,14 @@
 <body>
 <div class="jumbotron">
     <h3>文章管理</h3>
+</div>
+<div class="col-md-push-6" >
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..."  id="name">
+        <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="queryByKeywordAndPage()">搜索</button>
+      </span>
+    </div><!-- /input-group -->
 </div>
 <table id="carouselTable"></table>
 <div id="carouselPager"></div>

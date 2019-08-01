@@ -74,13 +74,13 @@ public class UserController {
         int lastRowNum = sheet.getLastRowNum();
         //创建一个集合取接受
         List<User> users = new ArrayList<>();
-        System.out.println(lastRowNum);
+
         for (int i = 0; i < lastRowNum - 1; i++) {
             Row row = sheet.getRow(i + 1);
             Cell cell = row.getCell(0);
             User user = new User();
             String id = cell.getStringCellValue();
-            System.out.println(id);
+
             user.setId(UUID.randomUUID().toString());
             Cell cell1 = row.getCell(1);
             String phone = cell1.getStringCellValue();
@@ -116,7 +116,7 @@ public class UserController {
             users.add(user);
         }
         for (User user1 : users) {
-            System.out.println(user1);
+
             userService.addByeasyPoi(user1);
         }
     }

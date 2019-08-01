@@ -30,13 +30,13 @@ public class TestArticle {
             System.out.println(article);
         }
     }
-    @Test
-    public void test3(){
-        List<Article> articles = articleService.queryAllByPage(1, 3);
-        for (Article article : articles) {
-            System.out.println(article);
-        }
-    }
+//    @Test
+//    public void test3(){
+//        List<Article> articles = articleService.queryAllByPage(1, 3);
+//        for (Article article : articles) {
+//            System.out.println(article);
+//        }
+//    }
     @Test
     public void test4(){
         List<Article> articles = articleService.queryByKeywordAndPage("故事", 1, 3);
